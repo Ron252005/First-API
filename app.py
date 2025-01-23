@@ -15,12 +15,14 @@ with open('data.json', 'r') as file:
 def get_marks():
     names = request.args.getlist('name')
     result = {}
+    for student in student_data:
+        if student['name'] in names:
+            result[student['name']] = student['marks']
     for name in names:
-        if name in student_data:
-            result[name] = student_data[name]
-        else:
+        if name not in result:
             result[name] = "Not found"
     return jsonify(result)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
