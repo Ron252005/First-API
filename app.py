@@ -18,9 +18,17 @@ def get_marks():
     names = request.args.getlist('name')
     result = {}
     marks_list = []
-    for student in student_data:
-        if student['name'] in names:
-            marks_list.append(student['marks'])
+    
+    # Create a dictionary for quick lookup
+    student_dict = {student['name']: student['marks'] for student in student_data}
+    
+    # Maintain the order of names as in the request
+    for name in names:
+        if name in student_dict:
+            marks_list.append(student_dict[name])
+        else:
+            marks_list.append(None)  # or you could use a sentinel value like -1
+    
     result["marks"] = marks_list
     return jsonify(result)
 
