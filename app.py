@@ -19,10 +19,7 @@ def get_marks():
     for student in student_data:
         if student['name'] in names:
             list.append(student['marks'])
-    for name in names:
-        if name not in result:
-            result[name] = "Not found"
-    result["name"] = list
+    result["marks"] = list
     return jsonify(result)
 
 
